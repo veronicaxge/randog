@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1021F2642290980B00056B71 /* DogAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106BC85C228A6B660069D351 /* DogAPI.swift */; };
+		1021F2662290A12D00056B71 /* BreedsListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1021F2652290A12D00056B71 /* BreedsListResponse.swift */; };
 		106BC848228A6A260069D351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106BC847228A6A260069D351 /* AppDelegate.swift */; };
 		106BC84A228A6A260069D351 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106BC849228A6A260069D351 /* ViewController.swift */; };
 		106BC84D228A6A270069D351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 106BC84B228A6A270069D351 /* Main.storyboard */; };
 		106BC84F228A6A270069D351 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 106BC84E228A6A270069D351 /* Assets.xcassets */; };
 		106BC852228A6A270069D351 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 106BC850228A6A270069D351 /* LaunchScreen.storyboard */; };
-		106BC85D228A6B660069D351 /* DogAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106BC85C228A6B660069D351 /* DogAPI.swift */; };
 		106BC85F228A725D0069D351 /* DogImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106BC85E228A725D0069D351 /* DogImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1021F2652290A12D00056B71 /* BreedsListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedsListResponse.swift; sourceTree = "<group>"; };
 		106BC844228A6A260069D351 /* randog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = randog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		106BC847228A6A260069D351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		106BC849228A6A260069D351 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			children = (
 				106BC85C228A6B660069D351 /* DogAPI.swift */,
 				106BC85E228A725D0069D351 /* DogImage.swift */,
+				1021F2652290A12D00056B71 /* BreedsListResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,8 +170,9 @@
 			files = (
 				106BC84A228A6A260069D351 /* ViewController.swift in Sources */,
 				106BC848228A6A260069D351 /* AppDelegate.swift in Sources */,
+				1021F2662290A12D00056B71 /* BreedsListResponse.swift in Sources */,
 				106BC85F228A725D0069D351 /* DogImage.swift in Sources */,
-				106BC85D228A6B660069D351 /* DogAPI.swift in Sources */,
+				1021F2642290980B00056B71 /* DogAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

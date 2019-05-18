@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var pickerView: UIPickerView!
     
     
-    let breeds: [String] = ["greyhound", "poodle"] //these are just the default breeds to display in that picker view.
+    var breeds: [String] = [] //these are just the default breeds to display in that picker view.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +23,8 @@ class ViewController: UIViewController {
         
         pickerView.dataSource = self
         pickerView.delegate = self
+        
+        DogAPI.requestBreedsList(completionHandler: handleBreedsListResponse(breeds:error:))
         
     }
     
@@ -34,6 +36,13 @@ class ViewController: UIViewController {
     //        DogAPI.requestRandomImage(completionHandler: handleRandomResponse(imageData:error:))
     //    [MOVED INTO THE PICKER VIEW EXTENSION BELOW.
     
+    //helper function 3 - get the breeds array and set the picker view.
+    func handleBreedsListResponse(breeds:[String], error:Error?){
+        self.breeds = breeds
+        DispatchQueue.main.async {
+           self.pickerView.reloadAllComponents()
+        }
+    }
     
     //Helper Function 1 - get the random image struct through completion handler:
     func handleRandomResponse(imageData:DogImage?, error: Error?){
@@ -78,9 +87,7 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     //this is what happens when the pickerview stops spinning and the row has been slelected.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        DogAPI.requestRandomImage(completionHandler: handleRandomResponse(imageData:error:))
+        DogAPI.requestRandomImage(breed: breeds[row], completionHandler: handleRandomResponse(imageData:error:))
     }
+
 }
-
-
-

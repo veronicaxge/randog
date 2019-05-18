@@ -11,24 +11,62 @@ import UIKit
 
 //create a class to be used in the VCs.
 class DogAPI{
+    
     //create an enum to hold all the dog images from the URLs.
-    enum Endpoint: String {
-        case randomeImageFromAllDogsCollection = "https://dog.ceo/api/breeds/image/random" //dont shy away from long names
+    enum Endpoint {
+        case randomImageFromAllDogsCollection //dont shy away from long names
+        
+        case randomImageForBreed(String)
+        
+        case listAllBreeds
         
        //we will use string interpolation to modify this URL so that it won't just be the hound breed by could be any breed we select. 
         
         var url: URL{
-            return URL(string: self.rawValue)! //only force unwrap if you know this string will indeed generate an URL
-            
+            return URL(string: self.stringValue)! //only force unwrap if you know this string will indeed generate an URL
         }
         
+        var stringValue: String {
+            switch self {
+                
+            case .randomImageFromAllDogsCollection: return "https://dog.ceo/api/breeds/image/random"
+            case .randomImageForBreed(let breed): return "https://dog.ceo/api/breed/\(breed)/images/random"
+            case .listAllBreeds: return "https://dog.ceo/api/breeds/list/all"
+            }
+        }
     }
     
-    class func requestRandomImage(completionHandler: @escaping(DogImage?, Error?) -> Void){
+    
+    class func requestBreedsList(completionHandler: @escaping([String], Error?) -> Void){
+        let breedListEndpoint = DogAPI.Endpoint.listAllBreeds.url
+        let task = URLSession.shared.dataTask(with: breedListEndpoint) { (data, response, error) in
+            guard let data = data
+                else{
+                completionHandler([], error) //instead of nil, passing back an empty array, if we didn't get any dog breeds from this request.
+                return
+                }
+            print(data)//the data returned from this url is the JSON object of the breeds list.
+            
+            let decoder = JSONDecoder()
+            do {
+                let breedsDict = try decoder.decode(BreedListResponse.self, from: data)
+                print (breedsDict)
+                let breeds = breedsDict.message.keys.map({$0})
+                print (breeds)
+                
+                completionHandler(breeds,nil)
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
+    
+    class func requestRandomImage(breed: String, completionHandler: @escaping(DogImage?, Error?) -> Void){
         
         //take the URL from the random generator in dogAPI
-        let randomImageEndpoint = DogAPI.Endpoint.randomeImageFromAllDogsCollection.url
-        
+        let randomImageEndpoint = DogAPI.Endpoint.randomImageForBreed(breed).url
         
         //make network request through a URLSession data task
         let task = URLSession.shared.dataTask(with: randomImageEndpoint) { (data, response, error) in
@@ -40,20 +78,6 @@ class DogAPI{
             //the data returned is a JSON file, not really the image itself.
             //Need to parse the JSON data into a struct, or a dictionary, etc.
             print(data)
-            
-            //MARK: parsing json object with JSONSerialization through converting the json object into a DICTIONARY (older way;can't handle more complex json objects)
-            //            do{
-            //            //create a json object with the returned data.
-            //                let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any] //use the as! to force json to be a dictionary where keys are strings and values can be any.
-            //                //access the "message" part of the dogAPI json object and set that as the url for the UIImage.
-            //                let url = json["message"] as! String
-            //                print(url)
-            //            } catch {
-            //                print(error)
-            //            } //wrap the jsonObject creation funciton with a do and cathc statement in case of nil/error
-            
-            
-         
             
             //MARK: new Codable protocol; better than JSONSerialization. Converting the JSON object into a STRUCT. Therefore no need to map the keys to dictionary manually.
             //use a JSON decoder to convert the JSON object into a Struct
@@ -90,7 +114,6 @@ class DogAPI{
         })
         task.resume()
     }
-    
     
     
 }
